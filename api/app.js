@@ -21,7 +21,7 @@ var swaggerDefinition = {
     version: '1.0.0',
     description: '',
   },
-  host: 'stneermqzj.localtunnel.me',
+  host: 'tabpgecqbi.localtunnel.me',
   basePath: '/',
 };
 

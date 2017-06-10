@@ -48,17 +48,14 @@ var Users = require('../models/users')
  *         description: Error message(s)
  */
 exports.register = function (req, res, next) {
-  var username = _.get(req.body, 'username');
-  var password = _.get(req.body, 'password');
+  var facebook = _.get(req.body, 'facebook');
+  var email = _.get(req.body, 'email');
+  var firstName = _.get(req.body, 'firstName');
+  var lastName = _.get(req.body, 'lastName');
+  var avatar = _.get(req.body, 'avatar');
+  var gender = _.get(req.body, 'gender');
 
-  if (!username) {
-    throw {username: 'This field is required.', status: 400};
-  }
-  if (!password) {
-    throw {password: 'This field is required.', status: 400};
-  }
-
-  Users.register(dbUtils.getSession(req), username, password)
+  Users.register(dbUtils.getSession(req), facebook, firstName, lastName, avatar, gender, email)
     .then(response => writeResponse(res, response, 201))
     .catch(next);
 };

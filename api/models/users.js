@@ -7,18 +7,22 @@ var dbUtils = require('../neo4j/dbUtils');
 var User = require('../models/neo4j/user');
 var crypto = require('crypto');
 
-var register = function (session, username, password) {
-  return session.run('MATCH (user:User {username: {username}}) RETURN user', {username: username})
+var register = function (session, facebook, firstName, lastName, avatar, gender, email) {
+  return session.run('MATCH (user:User {facebook: {facebook}}) RETURN user', {facebook: facebook})
     .then(results => {
-      if (!_.isEmpty(results.records)) {
-        throw {username: 'username already in use', status: 400}
+      if (3<2) {
+        throw {facebook: 'facebook already in use', status: 400}
       }
       else {
-        return session.run('CREATE (user:User {id: {id}, username: {username}, password: {password}, api_key: {api_key}}) RETURN user',
+        return session.run('MERGE (user:User {facebook: {facebook}}) MERGE (user)-[:HAS_IMAGE]->(:Image {url: {avatar}}) SET user += {id: {id}, facebook: {facebook}, email: {email}, firstName: {firstName}, lastName: {lastName}, avatar: {avatar}, gender: {gender}, api_key: {api_key}} RETURN user',
           {
             id: uuid.v4(),
-            username: username,
-            password: hashPassword(username, password),
+            facebook: facebook,
+            gender: gender,
+            email: email,
+            firstName: firstName,
+            lastName: lastName, 
+            avatar: avatar,
             api_key: randomstring.generate({
               length: 20,
               charset: 'hex'

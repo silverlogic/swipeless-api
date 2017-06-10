@@ -4,13 +4,12 @@ var _ = require('lodash');
 var md5 = require('md5');
 
 var User = module.exports = function (_node) {
-  var username = _node.properties['username'];
-
-  _.extend(this, {
-    'id': _node.properties['id'],
-    'username': username,
-    'avatar': {
-      'full_size': 'https://www.gravatar.com/avatar/' + md5(username) + '?d=retro'
-    }
-  });
+console.log("in user model");
+  var email = _node.properties['email'];
+  var facebook = _node.properties['facebook'];
+  var firstName = _node.properties['firstName'];
+  var lastName = _node.properties['lastName'];
+  var avatar = _node.properties['avatar'];
+  var gender = _node.properties['gender'];
+  var email = _node.properties['email'];
 };
