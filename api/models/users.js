@@ -14,7 +14,7 @@ var register = function (session, facebook, firstName, lastName, avatar, gender,
         throw {facebook: 'facebook already in use', status: 400}
       }
       else {
-        return session.run('MERGE (user:User {facebook: {facebook}}) MERGE (user)-[:HAS_IMAGE]->(:Image {url: {avatar}, id:{imageId} }) SET user += {id: {id}, facebook: {facebook}, email: {email}, firstName: {firstName}, lastName: {lastName}, avatar: {avatar}, gender: {gender}, api_key: {api_key}, imageId: {imageId}} RETURN user',
+        return session.run('MERGE (user:User {email: {email}}) MERGE (user)-[:HAS_IMAGE]->(:Image {url: {avatar}, id:{imageId} }) SET user += {id: {id}, facebook: {facebook}, email: {email}, firstName: {firstName}, lastName: {lastName}, avatar: {avatar}, gender: {gender}, api_key: {api_key}, imageId: {imageId}} RETURN user',
           {
             id: uuid.v4(),
             imageId: uuid.v4(),

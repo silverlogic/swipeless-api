@@ -273,53 +273,20 @@ exports.findMoviesByWriter = function (req, res, next) {
     .catch(next);
 };
 
-/**
- * @swagger
- * /api/v0/movies/{id}/rate:
- *   post:
- *     tags:
- *     - movies
- *     description: Rate a movie from 0-5 inclusive
- *     summary: Rate a movie from 0-5 inclusive
- *     produces:
- *       - application/json
- *     parameters:
- *       - name: id
- *         description: id of the writer who wrote the movies
- *         in: path
- *         required: true
- *         type: integer
- *       - name: body
- *         in: body
- *         type: object
- *         schema:
- *           properties:
- *             rating:
- *               type: integer
- *       - name: Authorization
- *         in: header
- *         type: string
- *         required: true
- *         description: Token (token goes here)
- *     responses:
- *       200:
- *         description: movie rating saved
- *       400:
- *         description: Error message(s)
- *       401:
- *         description: invalid / missing authentication
- */
-exports.rateMovie = function (req, res, next) {
-  loginRequired(req, res, () => {
-    var rating = Number(_.get(req.body, 'rating'));
-    if (isNaN(rating) || rating < 0 || rating >= 6) {
-      throw {rating: 'Rating value is invalid', status: 400};
-    }
 
-    Movies.rate(dbUtils.getSession(req), req.params.id, req.user.id, rating)
+exports.rate = function (req, res, next) {
+  var email = _.get(req.body, 'email');
+  var imageId = _.get(req.body, 'imageId');
+  var anger = _.get(req.body, 'anger');
+  var disgust = _.get(req.body, 'disgust');
+  var fear = _.get(req.body, 'fear');
+  var joy = _.get(req.body, 'joy');
+  var sadness = _.get(req.body, 'sadness');
+  var surprise = _.get(req.body, 'surprise');
+  
+  Movies.rate(dbUtils.getSession(req), imageId, email, anger, disgust, fear, joy, sadness, surprise)
       .then(response => writeResponse(res, {}))
       .catch(next);
-  });
 };
 
 /**

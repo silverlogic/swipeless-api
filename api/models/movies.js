@@ -168,16 +168,22 @@ var getByWriter = function(session, personId) {
   }).then(result => manyMovies(result));
 };
 
-var rate = function (session, movieId, userId, rating) {
+// user rates an image with anger, disgust, fear, joy, sadness, surprise 
+var rate = function (session, imageId, email, anger, disgust, fear, joy, sadness, surprise) {
   return session.run(
-    'MATCH (u:User {id: {userId}}),(m:Movie {id: {movieId}}) \
-    MERGE (u)-[r:RATED]->(m) \
-    SET r.rating = {rating} \
-    RETURN m',
+    ['MATCH (user:User {email:{email}}),(image:Image {id:{imageId}})',
+    'MERGE (user)-[r:RATED {anger:{anger}, disgust:{disgust}, fear:{fear}, joy:{joy}, sadness:{sadness}, surprise:{surprise}}]->(image)',
+    'RETURN user'].join('\n'),
     {
-      userId: userId,
-      movieId: parseInt(movieId),
-      rating: parseInt(rating)
+      email: email,
+      imageId: imageId,
+      anger: anger, 
+      surprise: surprise, 
+      disgust: disgust,
+      fear: fear,
+      joy: joy,
+      sadness: sadness,
+      surprise: surprise,
     }
   );
 };

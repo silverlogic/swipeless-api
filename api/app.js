@@ -74,7 +74,7 @@ api.get('/movies/daterange/:start/:end', routes.movies.findMoviesByDateRange);
 api.get('/movies/directed_by/:id', routes.movies.findMoviesByDirector);
 api.get('/movies/acted_in_by/:id', routes.movies.findMoviesByActor);
 api.get('/movies/written_by/:id', routes.movies.findMoviesByWriter);
-api.post('/movies/:id/rate', routes.movies.rateMovie);
+api.post('/rate', routes.movies.rate);
 api.delete('/movies/:id/rate', routes.movies.deleteMovieRating);
 api.get('/people', routes.people.list);
 api.get('/people/:id', routes.people.findById);
