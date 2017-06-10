@@ -3,10 +3,11 @@ web/config/settings.js
 web/build
 web/bower_components
 web/node_modules
-
+/venv
 api/node_modules
 api/config/settings.json
 *.pyc
+flask-api/
 
 database/*
 

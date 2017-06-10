@@ -2,7 +2,8 @@ var _ = require('lodash');
 var Genre = require('../models/neo4j/genre');
 
 var getAll = function(session) {
-  return session.run('MATCH (genre:Genre) RETURN genre')
+	console.log("/models/genres.js")
+  return session.run('MATCH (genre:Baseline) RETURN genre')
     .then(_manyGenres);
 };
 

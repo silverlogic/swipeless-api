@@ -21,7 +21,7 @@ var swaggerDefinition = {
     version: '1.0.0',
     description: '',
   },
-  host: 'tabpgecqbi.localtunnel.me',
+  host: 'kfunkfhwue.localtunnel.me',
   basePath: '/',
 };
 
@@ -79,7 +79,7 @@ api.delete('/movies/:id/rate', routes.movies.deleteMovieRating);
 api.get('/people', routes.people.list);
 api.get('/people/:id', routes.people.findById);
 api.get('/people/bacon', routes.people.getBaconPeople);
-api.get('/genres', routes.genres.list);
+api.get('/baselines', routes.genres.list);
 
 //api error handler
 api.use(function(err, req, res, next) {
