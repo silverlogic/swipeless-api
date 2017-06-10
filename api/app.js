@@ -21,7 +21,7 @@ var swaggerDefinition = {
     version: '1.0.0',
     description: '',
   },
-  host: 'kfunkfhwue.localtunnel.me',
+  host: 'iqmvimhmbk.localtunnel.me',
   basePath: '/',
 };
 
@@ -61,10 +61,12 @@ api.use(function(req, res, next) {
 api.use(setAuthUser);
 api.use(neo4jSessionCleanup);
 
-//api routes
+//api routes for hackathon
 api.post('/register', routes.users.register);
-api.post('/login', routes.users.login);
-api.get('/users/me', routes.users.me);
+api.post('/seek', routes.users.seek);
+api.post('/rate', routes.movies.rate);
+
+//old api routes
 api.get('/movies', routes.movies.list);
 api.get('/movies/recommended', routes.movies.getRecommendedMovies);
 api.get('/movies/rated', routes.movies.findMoviesRatedByMe);
@@ -74,7 +76,6 @@ api.get('/movies/daterange/:start/:end', routes.movies.findMoviesByDateRange);
 api.get('/movies/directed_by/:id', routes.movies.findMoviesByDirector);
 api.get('/movies/acted_in_by/:id', routes.movies.findMoviesByActor);
 api.get('/movies/written_by/:id', routes.movies.findMoviesByWriter);
-api.post('/rate', routes.movies.rate);
 api.delete('/movies/:id/rate', routes.movies.deleteMovieRating);
 api.get('/people', routes.people.list);
 api.get('/people/:id', routes.people.findById);

@@ -37,40 +37,17 @@ var register = function (session, facebook, firstName, lastName, avatar, gender,
     });
 };
 
-var me = function (session, apiKey) {
-  return session.run('MATCH (user:User {api_key: {api_key}}) RETURN user', {api_key: apiKey})
-    .then(results => {
-      if (_.isEmpty(results.records)) {
-        throw {message: 'invalid authorization key', status: 401};
-      }
-      return new User(results.records[0].get('user'));
-    });
-};
+// is a user exclusively looking for 1 = male, 2 = female (leave empty for any)
+var seek = function (session, email, seeking) {
+  var query = 'MATCH (user:User {email: {email}}) SET user.seeking = {seeking} RETURN user';
 
-var login = function (session, username, password) {
-  return session.run('MATCH (user:User {username: {username}}) RETURN user', {username: username})
-    .then(results => {
-        if (_.isEmpty(results.records)) {
-          throw {username: 'username does not exist', status: 400}
-        }
-        else {
-          var dbUser = _.get(results.records[0].get('user'), 'properties');
-          if (dbUser.password != hashPassword(username, password)) {
-            throw {password: 'wrong password', status: 400}
-          }
-          return {token: _.get(dbUser, 'api_key')};
-        }
-      }
-    );
+  return session.run(query, {
+    email: email,
+    seeking: seeking
+  })
 };
-
-function hashPassword(username, password) {
-  var s = username + ':' + password;
-  return crypto.createHash('sha256').update(s).digest('hex');
-}
 
 module.exports = {
   register: register,
-  me: me,
-  login: login
+  seek: seek
 };
