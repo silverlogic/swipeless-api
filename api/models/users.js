@@ -46,6 +46,10 @@ var seek = function (session, email, seeking) {
   })
 };
 
+function manyUsers(neo4jResult) {
+  return neo4jResult.records.map(r => new Movie(r.get('movie')))
+}
+
 var browse = function (session, email) {
   var query = ['match (u:User {email:{email}}),(m:User)-[:HAS_IMAGE]-(i:Image)',
   'where u.seeking = m.gender and NOT (u)-[:RATED]-(i) and u <> m',
@@ -53,13 +57,17 @@ var browse = function (session, email) {
   'with u, m,i',
   'optional match (m)-[r:RATED]->(u)',
   'optional match (u)-[s:SIMILARITY]-(m)',
-  'return distinct m.email, i.id as imageId, s.rating as similarity, r.joy as otherPersonsJoyRating',
-  'order by s.rating limit 5'
+  'return collect(DISTINCT {email:m.email, url:m.url, bio:m.bio, firstName:m.firstName, lastName:m.lastName, imageId:i.id, theirRatingOfMe:r.joy}) AS user'
   ].join('\n');
 
   return session.run(query, {
     email: email
-  })
+  }
+  ).then(result => manyUsers(result));
+}
+
+function manyUsers(neo4jResult) {
+  return neo4jResult.records.map(r => r.get('user'))[0]
 }
 
 module.exports = {

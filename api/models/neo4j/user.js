@@ -4,10 +4,16 @@ var _ = require('lodash');
 var md5 = require('md5');
 
 var User = module.exports = function (_node) {
-  var email = _node.properties['email'].toString();
-  var facebook = _node.properties['facebook'].toString();
-  var firstName = _node.properties['firstName'].toString();
-  var lastName = _node.properties['lastName'].toString();
-  var avatar = _node.properties['avatar'].toString();
-  var gender = _node.properties['gender'].toString();
+	_.extend(this, _node.properties);
+	if (this.similarity) { 
+		this.id = this.id.toNumber();
+  	}
+	if (this.joyOther) { 
+		this.id = this.id.toNumber();
+  	}
+  // var email = _node.properties['email'].toString();
+  // var firstName = _node.properties['firstName'].toString();
+  // var lastName = _node.properties['lastName'].toString();
+  // var avatar = _node.properties['avatar'].toString();
+  // var gender = _node.properties['gender'].toString();
 };
