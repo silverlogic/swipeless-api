@@ -65,6 +65,7 @@ api.use(neo4jSessionCleanup);
 api.post('/register', routes.users.register);
 api.post('/seek', routes.users.seek);
 api.post('/rate', routes.genres.rate);
+api.post('/browse', routes.users.browse);
 api.get('/baselines', routes.genres.list);
 
 //api error handler

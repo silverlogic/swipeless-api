@@ -30,3 +30,12 @@ exports.seek = function (req, res, next) {
     .catch(next);
 };
 
+// browse for matches
+
+exports.browse = function (req, res, next) {
+  var email = _.get(req.body, 'email');
+  Users.browse(dbUtils.getSession(req), email)
+    .then(response => writeResponse(res, response, 201))
+    .catch(next);
+};
+

@@ -37,7 +37,6 @@ var register = function (session, facebook, firstName, lastName, avatar, gender,
     });
 };
 
-// is a user exclusively looking for 1 = male, 2 = female (leave empty for any)
 var seek = function (session, email, seeking) {
   var query = 'MATCH (user:User {email: {email}}) SET user.seeking = {seeking} RETURN user';
 
@@ -47,7 +46,24 @@ var seek = function (session, email, seeking) {
   })
 };
 
+var browse = function (session, email) {
+  var query = ['match (u:User {email:{email}}),(m:User)-[:HAS_IMAGE]-(i:Image)',
+  'where u.seeking = m.gender and NOT (u)-[:RATED]-(i) and u <> m',
+  'and u <> m',
+  'with u, m,i',
+  'optional match (m)-[r:RATED]->(u)',
+  'optional match (u)-[s:SIMILARITY]-(m)',
+  'return distinct m.email, i.id as imageId, s.rating as similarity, r.joy as otherPersonsJoyRating',
+  'order by s.rating limit 5'
+  ].join('\n');
+
+  return session.run(query, {
+    email: email
+  })
+}
+
 module.exports = {
   register: register,
-  seek: seek
+  seek: seek,
+  browse: browse
 };
