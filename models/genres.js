@@ -8,6 +8,8 @@ var getAll = function(session) {
 
 // user rates an image with anger, disgust, fear, joy, sadness, surprise 
 var rate = function (session, imageId, email, anger, disgust, fear, joy, sadness, surprise) {
+  console.log("email: " + email);
+  console.log("image: " + imageId);
   session.run(
     ['MATCH (user:User {email:{email}}),(image:Image {id:{imageId}})',
     'MERGE (user)-[r:RATED]->(image)',
