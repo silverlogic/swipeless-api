@@ -8,6 +8,7 @@ api/node_modules
 api/config/settings.json
 *.pyc
 flask-api/
+api/uploads
 
 database/*
 

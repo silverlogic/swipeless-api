@@ -65,6 +65,7 @@ api.use(neo4jSessionCleanup);
 api.post('/register', routes.users.register);
 api.post('/seek', routes.users.seek);
 api.post('/rate', routes.movies.rate);
+api.get('/baselines', routes.genres.list);
 
 //old api routes
 api.get('/movies', routes.movies.list);
@@ -77,10 +78,6 @@ api.get('/movies/directed_by/:id', routes.movies.findMoviesByDirector);
 api.get('/movies/acted_in_by/:id', routes.movies.findMoviesByActor);
 api.get('/movies/written_by/:id', routes.movies.findMoviesByWriter);
 api.delete('/movies/:id/rate', routes.movies.deleteMovieRating);
-api.get('/people', routes.people.list);
-api.get('/people/:id', routes.people.findById);
-api.get('/people/bacon', routes.people.getBaconPeople);
-api.get('/baselines', routes.genres.list);
 
 //api error handler
 api.use(function(err, req, res, next) {

@@ -1,7 +1,6 @@
 var _ = require('lodash');
 var dbUtils = require('../neo4j/dbUtils');
 var Movie = require('../models/neo4j/movie');
-var Person = require('../models/neo4j/person');
 var Genre = require('../models/neo4j/genre');
 
 var _singleMovieWithDetails = function (record) {
